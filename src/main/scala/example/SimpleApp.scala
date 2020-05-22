@@ -22,7 +22,7 @@ object SimpleApp extends JSApp {
   def render(root: Element) = {
     val e = div(
       cls := "container",
-      h1("Undo/Redo experiment"),
+      h1("Undo/Redo"),
       p(a(href := "https://github.com/lunatech-labs/lunatech-scalajs-undo-redo", "Source code")),
       counter.render // renders the counter view
     ).render
