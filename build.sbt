@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
 
-name := "Diode Example"
+name := "Undo Redo experiments"
 
 scalaVersion := "2.12.10"
 
