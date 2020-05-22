@@ -2,12 +2,12 @@ enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
 
 name := "Diode Example"
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.10"
 
 scalaJSUseMainModuleInitializer := true
 
 libraryDependencies ++= Seq(
-  "org.scala-js" %%% "scalajs-dom" % "0.9.3",
+  "org.scala-js" %%% "scalajs-dom" % "0.9.6",
   "com.lihaoyi"  %%% "scalatags"   % "0.6.7",
   "io.suzaku"    %%% "diode-core"  % "1.1.3"
 )
