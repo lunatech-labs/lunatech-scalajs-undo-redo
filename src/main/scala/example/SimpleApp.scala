@@ -23,7 +23,7 @@ object SimpleApp extends JSApp {
     val e = div(
       cls := "container",
       h1("Undo/Redo experiment"),
-      p(a(href := "https://github.com/suzaku-io/diode/tree/master/examples/simple", "Source code")),
+      p(a(href := "https://github.com/lunatech-labs/lunatech-scalajs-undo-redo", "Source code")),
       counter.render // renders the counter view
     ).render
     // clear and update contents
