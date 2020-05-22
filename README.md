@@ -1,5 +1,6 @@
-# lunatech-scalajs-undo-redo
-Repository to experiment with undo/redo approaches in ScalaJS
+# ScalaJS undo/redo
+
+This repository is to experiment with undo/redo approaches in ScalaJS, in particular using [Diode](https://github.com/suzaku-io/diode).
 
 ## To run locally
 
