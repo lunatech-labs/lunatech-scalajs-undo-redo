@@ -3,14 +3,7 @@ package example
 import diode._
 import scalatags.JsDom.all._
 
-/**
-  * Counter view renders the counter value and provides interaction through
-  * various buttons affecting the counter value.
-  *
-  * @param counter  Model reader for the counter value
-  * @param dispatch Dispatcher
-  */
-class CounterView(world: ModelRO[World], dispatch: Dispatcher) {
+class WholeModelView(world: ModelRO[World], dispatch: Dispatcher) {
   def render = {
     div(
       h3("Counter"),

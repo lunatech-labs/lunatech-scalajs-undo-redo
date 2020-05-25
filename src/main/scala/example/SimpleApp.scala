@@ -8,7 +8,7 @@ import org.scalajs.dom._
 @JSExportTopLevel("SimpleApp")
 object SimpleApp extends JSApp {
   // create a view for the counter
-  val counter = new CounterView(AppCircuit.zoom(_.world), AppCircuit)
+  val wholeModelView = new WholeModelView(AppCircuit.zoom(_.world), AppCircuit)
 
   @JSExport
   override def main(): Unit = {
@@ -24,7 +24,7 @@ object SimpleApp extends JSApp {
       cls := "container",
       h1("Undo/Redo"),
       p(a(href := "https://github.com/lunatech-labs/lunatech-scalajs-undo-redo", "Source code")),
-      counter.render // renders the counter view
+      div(wholeModelView.render, wholeModelView.render)
     ).render
     // clear and update contents
     root.innerHTML = ""
