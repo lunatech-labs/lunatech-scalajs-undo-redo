@@ -6,7 +6,7 @@ import scalatags.JsDom.all._
 class WholeModelView(wholeModel: ModelRO[WholeModel], dispatch: Dispatcher) {
   def render = {
     div(
-      h3("Counter"),
+      h3("Whole Model"),
       p("Value = ", b(wholeModel().counter.value)),
       div(
         cls := "btn-group",
