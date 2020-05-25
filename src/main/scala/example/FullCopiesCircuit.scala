@@ -6,9 +6,9 @@ import scala.math.{ max, min }
 
 case class Counter(value: Int)
 
-case class WholeModel(counter: Counter, history: Map[Int, Counter], position: Int)
+case class FullCopies(counter: Counter, history: Map[Int, Counter], position: Int)
 
-object WholeModel {
+object FullCopies {
   case class Increase(amount: Int) extends Action
   case class Decrease(amount: Int) extends Action
   case object Reset extends Action
@@ -16,35 +16,35 @@ object WholeModel {
   case object Redo extends Action
 }
 
-object WholeModelCircuit extends Circuit[WholeModel] {
+object FullCopiesCircuit extends Circuit[FullCopies] {
 
-  val initialModel = WholeModel(Counter(0), Map(0 -> Counter(0)), 0)
+  val initialModel = FullCopies(Counter(0), Map(0 -> Counter(0)), 0)
 
   override val actionHandler: HandlerFunction =
     (model, action) => action match {
 
-      case WholeModel.Increase(a) => {
+      case FullCopies.Increase(a) => {
         val increasedCounter = Counter(model.counter.value + a)
         val increasedHistory = model.history + ((model.position + 1) -> increasedCounter)
-        val increasedWholeModel = model.copy(counter = increasedCounter, history = increasedHistory, position = model.position + 1)
-        Some(ModelUpdate(increasedWholeModel))
+        val increasedFullCopies = model.copy(counter = increasedCounter, history = increasedHistory, position = model.position + 1)
+        Some(ModelUpdate(increasedFullCopies))
       }
 
-      case WholeModel.Reset => Some(ModelUpdate(initialModel))
+      case FullCopies.Reset => Some(ModelUpdate(initialModel))
 
-      case WholeModel.Undo => {
+      case FullCopies.Undo => {
         val newPosition = max(model.position - 1, 0)
         val previousCounter = model.history(newPosition)
-        val undoneWholeModel = model.copy(counter = previousCounter, position = newPosition)
-        Some(ModelUpdate(undoneWholeModel))
+        val undoneFullCopies = model.copy(counter = previousCounter, position = newPosition)
+        Some(ModelUpdate(undoneFullCopies))
       }
 
-      case WholeModel.Redo => {
+      case FullCopies.Redo => {
         val maxHistoryIndex = model.history.maxBy(_._1)._1
         val newPosition = min(model.position + 1, maxHistoryIndex)
         val previousCounter = model.history(newPosition)
-        val redoneWholeModel = model.copy(counter = previousCounter, position = newPosition)
-        Some(ModelUpdate(redoneWholeModel))
+        val redoneFullCopies = model.copy(counter = previousCounter, position = newPosition)
+        Some(ModelUpdate(redoneFullCopies))
       }
 
       case _ => None

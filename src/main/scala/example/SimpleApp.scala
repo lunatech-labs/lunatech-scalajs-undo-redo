@@ -8,24 +8,24 @@ import org.scalajs.dom._
 @JSExportTopLevel("SimpleApp")
 object SimpleApp extends JSApp {
 
-  val wholeModelView = new WholeModelView(WholeModelCircuit.zoom(identity), WholeModelCircuit)
-  val partialModelView = new PartialModelView(PartialModelCircuit.zoom(identity), PartialModelCircuit)
+  val fullCopiesView = new FullCopiesView(FullCopiesCircuit.zoom(identity), FullCopiesCircuit)
+  val reversibleActionsView = new ReversibleActionsView(ReversibleActionsCircuit.zoom(identity), ReversibleActionsCircuit)
 
   @JSExport
   override def main(): Unit = {
 
-    WholeModelCircuit.subscribe(WholeModelCircuit.zoom(identity))(_ => {
-      val wholeModelElement = document.getElementById("wholeModel")
-      wholeModelElement.innerHTML = ""
-      wholeModelElement.appendChild( div(cls := "container", wholeModelView.render).render)
+    FullCopiesCircuit.subscribe(FullCopiesCircuit.zoom(identity))(_ => {
+      val element = document.getElementById("fullCopies")
+      element.innerHTML = ""
+      element.appendChild( div(cls := "container", fullCopiesView.render).render)
     })
-    WholeModelCircuit(WholeModel.Reset)
+    FullCopiesCircuit(FullCopies.Reset)
 
-    PartialModelCircuit.subscribe(PartialModelCircuit.zoom(identity))(_ => {
-      val partialModelElement = document.getElementById("partialModel")
-      partialModelElement.innerHTML = ""
-      partialModelElement.appendChild( div(cls := "container", partialModelView.render).render)
+    ReversibleActionsCircuit.subscribe(ReversibleActionsCircuit.zoom(identity))(_ => {
+      val element = document.getElementById("reversibleActions")
+      element.innerHTML = ""
+      element.appendChild( div(cls := "container", reversibleActionsView.render).render)
     })
-    PartialModelCircuit(PartialModel.Reset)
+    ReversibleActionsCircuit(ReversibleActions.Reset)
   }
 }
