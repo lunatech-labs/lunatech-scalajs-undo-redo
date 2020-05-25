@@ -3,19 +3,18 @@ package example
 import diode._
 import scalatags.JsDom.all._
 
-class WholeModelView(world: ModelRO[World], dispatch: Dispatcher) {
+class WholeModelView(wholeModel: ModelRO[WholeModel], dispatch: Dispatcher) {
   def render = {
     div(
       h3("Counter"),
-      p("Value = ", b(world().counter.value)),
+      p("Value = ", b(wholeModel().counter.value)),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => dispatch(Increase(2))), "Increase"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(Reset)), "Reset"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(Undo)), "Undo"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(Redo)), "Redo")
+        button(cls := "btn btn-default", onclick := (() => dispatch(WholeModel.Increase(2))), "Increase"),
+        button(cls := "btn btn-default", onclick := (() => dispatch(WholeModel.Reset)), "Reset"),
+        button(cls := "btn btn-default", onclick := (() => dispatch(WholeModel.Undo)), "Undo"),
+        button(cls := "btn btn-default", onclick := (() => dispatch(WholeModel.Redo)), "Redo")
       ),
-      p("Position: ", b(world().position))
     )
   }
 }

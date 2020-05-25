@@ -5,49 +5,59 @@ import diode.ActionResult.ModelUpdate
 import scala.math.{ max, min }
 
 
+case class RootModel(wholeModel: WholeModel)
+
+// case class World(counter: Counter, history: Map[Int, Counter], position: Int)
 case class Counter(value: Int)
 
-case class World(counter: Counter, history: Map[Int, Counter], position: Int)
 
-case class RootModel(world: World)
+case class WholeModel(counter: Counter, history: Map[Int, Counter], position: Int)
 
-// Define actions
-case class Increase(amount: Int) extends Action
-case class Decrease(amount: Int) extends Action
-case object Reset extends Action
+object WholeModel {
 
-case object Undo extends Action
-case object Redo extends Action
+  case class Increase(amount: Int) extends Action
+  case class Decrease(amount: Int) extends Action
+  case object Reset extends Action
+
+  case object Undo extends Action
+  case object Redo extends Action
+
+}
+
 
 object AppCircuit extends Circuit[RootModel] {
-  val world0 = World(Counter(0), Map(0 -> Counter(0)), 0)
-  def initialModel = RootModel(world0)
+
+  val emptyWholeModel = WholeModel(Counter(0), Map(0 -> Counter(0)), 0)
+  def initialModel = RootModel(emptyWholeModel)
 
   override val actionHandler: HandlerFunction =
     (model, action) => action match {
 
-      case Increase(a) => {
-        val increasedCounter = Counter(model.world.counter.value + a)
-        val increasedHistory = model.world.history + ((model.world.position + 1) -> increasedCounter)
-        val increasedWorld = World(increasedCounter, increasedHistory, model.world.position + 1)
-        Some(ModelUpdate(model.copy(world = increasedWorld)))
+      case WholeModel.Increase(a) => {
+        val wholeModel = model.wholeModel
+        val increasedCounter = Counter(wholeModel.counter.value + a)
+        val increasedHistory = wholeModel.history + ((wholeModel.position + 1) -> increasedCounter)
+        val increasedWholeModel = model.wholeModel.copy(counter = increasedCounter, history = increasedHistory, position = wholeModel.position + 1)
+        Some(ModelUpdate(model.copy(wholeModel = increasedWholeModel)))
       }
 
-      case Reset => Some(ModelUpdate(model.copy(world = world0)))
+      case WholeModel.Reset => Some(ModelUpdate(model.copy(wholeModel = emptyWholeModel)))
 
-      case Undo => {
-        val newPosition = max(model.world.position - 1, 0)
-        val previousCounter = model.world.history(newPosition)
-        val undoneWorld = model.world.copy(counter = previousCounter, position = newPosition)
-        Some(ModelUpdate(model.copy(world = undoneWorld)))
+      case WholeModel.Undo => {
+        val wholeModel = model.wholeModel
+        val newPosition = max(wholeModel.position - 1, 0)
+        val previousCounter = wholeModel.history(newPosition)
+        val undoneWholeModel = wholeModel.copy(counter = previousCounter, position = newPosition)
+        Some(ModelUpdate(model.copy(wholeModel = undoneWholeModel)))
       }
 
-      case Redo => {
-        val maxHistoryIndex = model.world.history.maxBy(_._1)._1
-        val newPosition = min(model.world.position + 1, maxHistoryIndex)
-        val previousCounter = model.world.history(newPosition)
-        val redoneWorld = model.world.copy(counter = previousCounter, position = newPosition)
-        Some(ModelUpdate(model.copy(world = redoneWorld)))
+      case WholeModel.Redo => {
+        val wholeModel = model.wholeModel
+        val maxHistoryIndex = wholeModel.history.maxBy(_._1)._1
+        val newPosition = min(wholeModel.position + 1, maxHistoryIndex)
+        val previousCounter = wholeModel.history(newPosition)
+        val redoneWholeModel = wholeModel.copy(counter = previousCounter, position = newPosition)
+        Some(ModelUpdate(model.copy(wholeModel = redoneWholeModel)))
       }
 
       case _ => None
