@@ -4,26 +4,7 @@ import diode._
 import diode.ActionResult.ModelUpdate
 import scala.math.{ max, min }
 
-
 case class RootModel(wholeModel: WholeModel)
-
-// case class World(counter: Counter, history: Map[Int, Counter], position: Int)
-case class Counter(value: Int)
-
-
-case class WholeModel(counter: Counter, history: Map[Int, Counter], position: Int)
-
-object WholeModel {
-
-  case class Increase(amount: Int) extends Action
-  case class Decrease(amount: Int) extends Action
-  case object Reset extends Action
-
-  case object Undo extends Action
-  case object Redo extends Action
-
-}
-
 
 object AppCircuit extends Circuit[RootModel] {
 

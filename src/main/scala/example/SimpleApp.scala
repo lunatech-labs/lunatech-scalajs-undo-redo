@@ -8,15 +8,18 @@ import org.scalajs.dom._
 @JSExportTopLevel("SimpleApp")
 object SimpleApp extends JSApp {
   // create a view for the counter
-  val wholeModelView = new WholeModelView(AppCircuit.zoom(_.wholeModel), AppCircuit)
+  val wholeModelView = new WholeModelView(WholeModelCircuit.zoom(identity), WholeModelCircuit)
 
   @JSExport
   override def main(): Unit = {
+
     val root = document.getElementById("root")
+
     // subscribe to changes in the application model and call render when anything changes
-    AppCircuit.subscribe(AppCircuit.zoom(identity))(_ => render(root))
+    WholeModelCircuit.subscribe(WholeModelCircuit.zoom(identity))(_ => render(root))
+
     // start the application by dispatching a Reset action
-    AppCircuit(WholeModel.Reset)
+    WholeModelCircuit(WholeModel.Reset)
   }
 
   def render(root: Element) = {
