@@ -7,3 +7,18 @@ This repository is to experiment with undo/redo approaches in ScalaJS, in partic
     sbt "~fastOptJS"
 	
 Visit http://localhost:12345
+
+## Using the server
+
+    python3 -m venv venv
+	. venv/bin/activate
+	pip install -r requirements.txt
+	python server.py
+
+    $ curl http://localhost:5000/recipes
+	
+    $ curl -X POST -H 'Content-Type: application/json' http://localhost:5000/recipes -d '{"id":"tiramisu","name":"tiramisu","ingredients":["coffee","eggs","mascarpone","savoiardi"],"instructions":["instruction 1","instruction 2"]}'
+
+    $ curl -X DELETE http://localhost:5000/recipes/pancakes
+	
+
