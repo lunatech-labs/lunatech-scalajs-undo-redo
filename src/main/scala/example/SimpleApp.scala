@@ -10,6 +10,7 @@ object SimpleApp extends JSApp {
 
   val fullCopiesView = new FullCopiesView(FullCopiesCircuit.zoom(identity), FullCopiesCircuit)
   val reversibleActionsView = new ReversibleActionsView(ReversibleActionsCircuit.zoom(identity), ReversibleActionsCircuit)
+  val recipesView = new RecipesView(RecipesCircuit.zoom(identity), RecipesCircuit)
 
   @JSExport
   override def main(): Unit = {
@@ -27,5 +28,12 @@ object SimpleApp extends JSApp {
       element.appendChild( div(cls := "container", reversibleActionsView.render).render)
     })
     ReversibleActionsCircuit(ReversibleActions.Reset)
+
+    RecipesCircuit.subscribe(RecipesCircuit.zoom(identity))(_ => {
+      val element = document.getElementById("recipes")
+      element.innerHTML = ""
+      element.appendChild( div(cls := "container", recipesView.render).render)
+    })
+    RecipesCircuit(ReversibleRecipeActions.Reset)
   }
 }
