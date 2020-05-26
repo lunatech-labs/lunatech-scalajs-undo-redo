@@ -1,0 +1,12 @@
+[
+  {"id": "pancakes",
+   "name": "pancakes",
+   "ingredients": ["milk", "eggs", "flour"],
+   "instructions": ["Put all in the mixer", "Cook them on a warm pan"]
+  },
+  {"id": "boeuf-bourguigon",
+   "name": "Boeuf Bourguignon",
+   "ingredients": ["beef", "Bourgogne wine"],
+   "instructions": ["Roast the beef", "Pour a bottle of wine", "Reduce the fire and let it cook softly for at least two hours"]
+  }
+]
