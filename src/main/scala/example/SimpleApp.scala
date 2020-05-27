@@ -18,22 +18,22 @@ object SimpleApp extends JSApp {
     FullCopiesCircuit.subscribe(FullCopiesCircuit.zoom(identity))(_ => {
       val element = document.getElementById("fullCopies")
       element.innerHTML = ""
-      element.appendChild( div(cls := "container", fullCopiesView.render).render)
+      element.appendChild(div(cls := "container", fullCopiesView.render).render)
     })
     FullCopiesCircuit(FullCopies.Reset)
 
     ReversibleActionsCircuit.subscribe(ReversibleActionsCircuit.zoom(identity))(_ => {
       val element = document.getElementById("reversibleActions")
       element.innerHTML = ""
-      element.appendChild( div(cls := "container", reversibleActionsView.render).render)
+      element.appendChild(div(cls := "container", reversibleActionsView.render).render)
     })
     ReversibleActionsCircuit(ReversibleActions.Reset)
 
     RecipesCircuit.subscribe(RecipesCircuit.zoom(identity))(_ => {
       val element = document.getElementById("recipes")
       element.innerHTML = ""
-      element.appendChild( div(cls := "container", recipesView.render).render)
+      element.appendChild(div(cls := "container", recipesView.render).render)
     })
-    RecipesCircuit(ReversibleRecipeActions.Reset)
+    RecipesCircuit(RecipeActions.Reset)
   }
 }

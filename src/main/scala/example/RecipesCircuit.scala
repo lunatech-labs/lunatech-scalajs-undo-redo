@@ -2,24 +2,31 @@ package example
 
 import diode._
 import diode.ActionResult.ModelUpdate
+import io.circe._
+import io.circe.generic.semiauto._
 
 case class Recipe(id: String, name: String, ingredients: Seq[String], instructions: Seq[String])
 
-case class Recipes(recipes: Seq[Recipe], pastActions: List[ReversibleRecipeAction], futureActions: List[ReversibleRecipeAction])
+case class Recipes(recipes: Seq[Recipe], pastActions: List[RecipeAction], futureActions: List[RecipeAction])
 
-trait ReversibleRecipeAction extends Action {
+object Recipe {
+  implicit val recipeDecoder: Decoder[Recipe] = deriveDecoder[Recipe]
+  implicit val recipeEncoder: Encoder[Recipe] = deriveEncoder[Recipe]
+}
+
+trait RecipeAction extends Action {
   def update(model: Recipes): Recipes
   def undo(model: Recipes): Recipes
 }
 
-object ReversibleRecipeActions {
+object RecipeActions {
 
-  case class Add(recipe: Recipe) extends ReversibleRecipeAction {
+  case class Add(recipe: Recipe) extends RecipeAction {
     def update(model: Recipes): Recipes = model.copy(recipes = recipe +: model.recipes)
     def undo(model: Recipes): Recipes = model.copy(recipes = model.recipes.filterNot(_.id == recipe.id))
   }
 
-  case class Delete(recipe: Recipe) extends ReversibleRecipeAction {
+  case class Delete(recipe: Recipe) extends RecipeAction {
     def update(model: Recipes): Recipes = model.copy(recipes = model.recipes.filterNot(_.id == recipe.id))
     def undo(model: Recipes): Recipes = model.copy(recipes = recipe +: model.recipes)
   }
@@ -27,20 +34,19 @@ object ReversibleRecipeActions {
   case object Undo extends Action
   case object Redo extends Action
   case object Reset extends Action
+  case object Refresh extends Action
 }
 
 object RecipesCircuit extends Circuit[Recipes] {
 
-  //val initialModel = Recipes(Nil, Nil, Nil)
-  val initialRecipe = Recipe("r1", "n1", Seq("ig1", "ig2"), Seq("is1", "is2"))
-  val initialModel = Recipes(Seq(initialRecipe), Nil, Nil)
+  val initialModel = Recipes(Nil, Nil, Nil)
 
   override val actionHandler: HandlerFunction =
     (model, action) => action match {
 
-      case ReversibleRecipeActions.Reset => Some(ModelUpdate(initialModel))
+      case RecipeActions.Reset => Some(ModelUpdate(initialModel))
 
-      case ReversibleRecipeActions.Undo => {
+      case RecipeActions.Undo => {
         val actionToUndo = model.pastActions.head
         val newModel = actionToUndo.undo(model).copy(
           pastActions = model.pastActions.tail,
@@ -49,7 +55,7 @@ object RecipesCircuit extends Circuit[Recipes] {
         Some(ModelUpdate(newModel))
       }
 
-      case ReversibleRecipeActions.Redo => {
+      case RecipeActions.Redo => {
         val actionToRedo = model.futureActions.head
         val newModel = actionToRedo.update(model).copy(
           pastActions = actionToRedo +: model.pastActions,
@@ -58,7 +64,7 @@ object RecipesCircuit extends Circuit[Recipes] {
         Some(ModelUpdate(newModel))
       }
 
-      case action: ReversibleRecipeAction => {
+      case action: RecipeAction => {
         val newModel = action.update(model).copy(
           pastActions = action +: model.pastActions
         )
