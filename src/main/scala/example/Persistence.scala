@@ -21,17 +21,26 @@ object Persistence {
       }
   }
 
-  def persist(recipes: Recipes, dispatch: Dispatcher): Unit = recipes.toAdd.map { recipe =>
-    print("toto")
-    Ajax.post(
-      url = s"$baseUrl/recipes",
-      data = recipe.asJson.noSpaces,
-      headers = Map("Content-Type" -> "application/json")
-    ).onSuccess {
-      case xhr =>
-        if (xhr.status == 200) {
-          dispatch(RecipeActions.AddedToPersistence(recipe))
-        }
+  def persist(recipes: Recipes, dispatch: Dispatcher): Unit = {
+    recipes.toAdd.map { recipe =>
+      Ajax.post(
+        url = s"$baseUrl/recipes",
+        data = recipe.asJson.noSpaces,
+        headers = Map("Content-Type" -> "application/json")
+      ).onSuccess {
+        case xhr =>
+          if (xhr.status == 200) {
+            dispatch(RecipeActions.AddedToPersistence(recipe))
+          }
+      }
+    }
+    recipes.toDelete.map { recipe =>
+      Ajax.delete(
+        url = s"$baseUrl/recipes/${recipe.id}"
+      ).onSuccess {
+        case xhr =>
+          dispatch(RecipeActions.DeletedFromPersistence(recipe))
+      }
     }
   }
 }

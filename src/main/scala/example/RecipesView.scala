@@ -21,7 +21,7 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
     div(
       h3("Cookbook"),
       p("Recipes: "),
-      ul(recipes().recipes.map { recipe => li(
+      ul(recipes().recipes.toSeq.map { recipe => li(
         span(recipe.name),
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
       )}),

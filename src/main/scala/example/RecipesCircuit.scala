@@ -8,11 +8,11 @@ import io.circe.generic.semiauto._
 case class Recipe(id: String, name: String, ingredients: Seq[String], instructions: Seq[String])
 
 case class Recipes(
-  recipes: Seq[Recipe],
+  recipes: Set[Recipe],
   pastActions: List[ReversibleRecipeAction],
   futureActions: List[ReversibleRecipeAction],
-  toAdd: List[Recipe],
-  toDelete: List[Recipe]
+  toAdd: Set[Recipe],
+  toDelete: Set[Recipe]
 )
 
 object Recipe {
@@ -30,11 +30,11 @@ object RecipeActions {
   case class Add(recipe: Recipe) extends ReversibleRecipeAction {
 
     def update(model: Recipes): Recipes = model.copy(
-      recipes = recipe +: model.recipes,
-      toAdd = recipe +: model.toAdd
+      recipes = model.recipes + recipe,
+      toAdd = model.toAdd + recipe
     )
 
-    def undo(model: Recipes): Recipes = {
+    def undo(model: Recipes): Recipes =
       if (model.toAdd.contains(recipe)) {
         model.copy(
           recipes = model.recipes.filterNot(_.id == recipe.id),
@@ -43,17 +43,30 @@ object RecipeActions {
       } else {
         model.copy(
           recipes = model.recipes.filterNot(_.id == recipe.id),
-          toDelete = recipe +: model.toDelete
+          toDelete = model.toDelete + recipe
         )
       }
-    }
   }
 
   case class Delete(recipe: Recipe) extends ReversibleRecipeAction {
-    def update(model: Recipes): Recipes = model.copy(recipes = model.recipes.filterNot(_.id == recipe.id))
-    def undo(model: Recipes): Recipes = model.copy(recipes = recipe +: model.recipes)
-  }
+    def update(model: Recipes): Recipes = model.copy(
+      recipes = model.recipes.filterNot(_.id == recipe.id),
+      toDelete = model.toDelete + recipe
+    )
 
+    def undo(model: Recipes): Recipes =
+      if (model.toDelete.contains(recipe)) {
+        model.copy(
+          recipes = model.recipes + recipe,
+          toDelete = model.toDelete.filterNot(_.id == recipe.id)
+        )
+      } else {
+        model.copy(
+          recipes = model.recipes + recipe,
+          toAdd = model.toAdd + recipe
+        )
+      }
+  }
 
   case object Undo extends Action
   case object Redo extends Action
@@ -66,7 +79,7 @@ object RecipeActions {
 
 object RecipesCircuit extends Circuit[Recipes] {
 
-  val initialModel = Recipes(Nil, Nil, Nil, Nil, Nil)
+  val initialModel = Recipes(Set(), Nil, Nil, Set(), Set())
 
   override val actionHandler: HandlerFunction =
     (model, action) => action match {
