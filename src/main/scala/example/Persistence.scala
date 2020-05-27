@@ -1,14 +1,8 @@
 package example
 
 import diode._
-import org.scalajs.dom
-import org.scalajs.dom.XMLHttpRequest
-import org.scalajs.dom.ext.{Ajax, KeyCode}
-import org.scalajs.dom.raw.Event
+import org.scalajs.dom.ext.Ajax
 import io.circe.parser._
-import io.circe.syntax._
-import io.circe.{ Decoder, Encoder }
-import scala.concurrent.ExecutionContext
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Persistence {
