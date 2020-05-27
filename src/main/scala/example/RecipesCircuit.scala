@@ -54,10 +54,14 @@ object RecipeActions {
     def undo(model: Recipes): Recipes = model.copy(recipes = recipe +: model.recipes)
   }
 
+
   case object Undo extends Action
   case object Redo extends Action
   case object Reset extends Action
-  case object Refresh extends Action
+
+  case class AddedToPersistence(recipe: Recipe) extends Action
+  case class DeletedFromPersistence(recipe: Recipe) extends Action
+
 }
 
 object RecipesCircuit extends Circuit[Recipes] {
@@ -91,6 +95,16 @@ object RecipesCircuit extends Circuit[Recipes] {
         val newModel = action.update(model).copy(
           pastActions = action +: model.pastActions
         )
+        Some(ModelUpdate(newModel))
+      }
+
+      case RecipeActions.AddedToPersistence(recipe) => {
+        val newModel = model.copy(toAdd = model.toAdd.filterNot(_.id == recipe.id))
+        Some(ModelUpdate(newModel))
+      }
+
+      case RecipeActions.DeletedFromPersistence(recipe) => {
+        val newModel = model.copy(toDelete = model.toDelete.filterNot(_.id == recipe.id))
         Some(ModelUpdate(newModel))
       }
 

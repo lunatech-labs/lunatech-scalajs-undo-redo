@@ -27,7 +27,6 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
       )}),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => Persistence.fetchRecipes(dispatch)), "Fetch"),
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Add(couscous))), "Add Couscous"),
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Add(cremeBrulee))), "Add Creme Brulee")
       ),
@@ -37,6 +36,12 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Undo)), "Undo"),
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Redo)), "Redo"),
         button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Reset)), "Reset")
+      ),
+      p(),
+      div(
+        cls := "btn-group",
+        button(cls := "btn btn-default", onclick := (() => Persistence.fetchRecipes(dispatch)), "Fetch"),
+        button(cls := "btn btn-default", onclick := (() => Persistence.persist(recipes(), dispatch)), "Persist")
       )
     )
   }
