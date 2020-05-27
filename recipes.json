@@ -1,6 +1,6 @@
 [
   {"id": "pancakes",
-   "name": "pancakes",
+   "name": "Pancakes",
    "ingredients": ["milk", "eggs", "flour"],
    "instructions": ["Put all in the mixer", "Cook them on a warm pan"]
   },
