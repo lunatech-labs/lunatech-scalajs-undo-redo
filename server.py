@@ -9,7 +9,9 @@ with open('recipes.json') as f:
     
 @app.route('/recipes', methods=['GET'])
 def get_recipes():
-    return jsonify(recipes)
+    response = jsonify(recipes)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/recipes', methods=['POST'])
 def post_recipe():
