@@ -1,4 +1,4 @@
-package example
+package com.lunatech.undoredo
 
 import diode._
 import org.scalajs.dom.ext.Ajax

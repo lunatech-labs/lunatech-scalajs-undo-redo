@@ -1,4 +1,4 @@
-package example
+package com.lunatech.undoredo
 
 import diode._
 import diode.ActionResult.ModelUpdate
