@@ -11,10 +11,10 @@ class ReversibleActionsView(partialModel: ModelRO[ReversibleActions], dispatch: 
       div(
         cls := "btn-group",
         role := "group",
-        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(ReversibleActions.Increase(3))), "Increase"),
-        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(ReversibleActions.Reset)), "Reset"),
-        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(ReversibleActions.Undo)), "Undo"),
-        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(ReversibleActions.Redo)), "Redo")
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(ReversibleActions.Increase(3))), "Increase"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(ReversibleActions.Reset)), "Reset"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(ReversibleActions.Undo)), "Undo"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(ReversibleActions.Redo)), "Redo")
       )
     )
   }
