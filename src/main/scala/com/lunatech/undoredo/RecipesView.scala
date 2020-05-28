@@ -25,24 +25,27 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
   def render = {
     div(
       h3("Cookbook"),
-      p("Recipes: "),
-      ul(cls := "list-group",
-        recipes().recipes.toSeq.map { recipe => li(cls := "list-group-item",
-        span(recipe.name),
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
-      )}),
-      div(
-        cls := "btn-group",
-        role := "group",
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Add(couscous))), "Add Couscous"),
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Add(cremeBrulee))), "Add Creme Brulee")
-      ),
-      p(),
       div(
         cls := "btn-group",
         button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Undo)), "Undo"),
         button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Redo)), "Redo"),
         button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Reset)), "Reset")
+      ),
+      p(),
+      div(
+        p("Recipes: "),
+        ul(cls := "list-group",
+          recipes().recipes.toSeq.map { recipe => li(cls := "list-group-item",
+            span(recipe.name),
+            button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
+          )}),
+      ),
+      p(),
+      div(
+        cls := "btn-group",
+        role := "group",
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Add(couscous))), "Add Couscous"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Add(cremeBrulee))), "Add Creme Brulee")
       ),
       p(),
       div(
