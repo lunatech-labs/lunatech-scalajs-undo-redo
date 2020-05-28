@@ -22,3 +22,10 @@ Visit http://localhost:12345
     $ curl -X DELETE http://localhost:5000/recipes/pancakes
 	
 
+## Action Items
+
+- [ ] Add form for adding a recipe.
+- [ ] Allow updating one recipe.
+- [ ] Limit actions history to 5 items.
+- [ ] On the backend, merge the POST and DELETE endpoints.
+- [ ] Disable/enable undo redo buttons when the corresponding list is empty
