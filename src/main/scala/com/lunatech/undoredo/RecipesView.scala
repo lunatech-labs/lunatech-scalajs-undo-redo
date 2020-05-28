@@ -26,27 +26,29 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
     div(
       h3("Cookbook"),
       p("Recipes: "),
-      ul(recipes().recipes.toSeq.map { recipe => li(
+      ul(cls := "list-group",
+        recipes().recipes.toSeq.map { recipe => li(cls := "list-group-item",
         span(recipe.name),
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
       )}),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Add(couscous))), "Add Couscous"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Add(cremeBrulee))), "Add Creme Brulee")
+        role := "group",
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Add(couscous))), "Add Couscous"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Add(cremeBrulee))), "Add Creme Brulee")
       ),
       p(),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Undo)), "Undo"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Redo)), "Redo"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(RecipeActions.Reset)), "Reset")
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Undo)), "Undo"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Redo)), "Redo"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(RecipeActions.Reset)), "Reset")
       ),
       p(),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => Persistence.fetchRecipes(dispatch)), "Fetch"),
-        button(cls := "btn btn-default", onclick := (() => Persistence.persist(recipes(), dispatch)), "Persist")
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => Persistence.fetchRecipes(dispatch)), "Fetch"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => Persistence.persist(recipes(), dispatch)), "Persist")
       )
     )
   }

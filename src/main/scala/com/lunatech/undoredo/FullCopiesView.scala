@@ -10,10 +10,11 @@ class FullCopiesView(wholeModel: ModelRO[FullCopies], dispatch: Dispatcher) {
       p("Value = ", b(wholeModel().counter.value)),
       div(
         cls := "btn-group",
-        button(cls := "btn btn-default", onclick := (() => dispatch(FullCopies.Increase(2))), "Increase"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(FullCopies.Reset)), "Reset"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(FullCopies.Undo)), "Undo"),
-        button(cls := "btn btn-default", onclick := (() => dispatch(FullCopies.Redo)), "Redo")
+        role := "group",
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(FullCopies.Increase(2))), "Increase"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(FullCopies.Reset)), "Reset"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(FullCopies.Undo)), "Undo"),
+        button(`type` := "button", cls := "btn btn-secondary", onclick := (() => dispatch(FullCopies.Redo)), "Redo")
       ),
     )
   }
