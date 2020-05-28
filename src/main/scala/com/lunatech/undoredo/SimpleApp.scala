@@ -1,12 +1,10 @@
 package com.lunatech.undoredo
 
-import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scalatags.JsDom.all._
 import org.scalajs.dom._
 
-@JSExportTopLevel("SimpleApp")
-object SimpleApp extends JSApp {
+object SimpleApp {
 
   val fullCopiesView = new FullCopiesView(FullCopiesCircuit.zoom(identity), FullCopiesCircuit)
   val reversibleActionsView = new ReversibleActionsView(ReversibleActionsCircuit.zoom(identity), ReversibleActionsCircuit)
@@ -40,9 +38,7 @@ object SimpleApp extends JSApp {
     RecipesCircuit(RecipeActions.Reset)
   }
 
-  @JSExport
-  override def main(): Unit = {
-
+  def main(args: Array[String]): Unit = {
     //fullCopies()
     //reversibleActions()
     recipes()
