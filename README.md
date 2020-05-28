@@ -13,7 +13,7 @@ Visit http://localhost:12345
     python3 -m venv venv
 	. venv/bin/activate
 	pip install -r requirements.txt
-	python server.py
+	FLASK_ENV=development python server.py
 
     $ curl http://localhost:5000/recipes
 	
