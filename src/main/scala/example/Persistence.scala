@@ -39,7 +39,9 @@ object Persistence {
         url = s"$baseUrl/recipes/${recipe.id}"
       ).onSuccess {
         case xhr =>
-          dispatch(RecipeActions.DeletedFromPersistence(recipe))
+          if (xhr.status == 200) {
+            dispatch(RecipeActions.DeletedFromPersistence(recipe))
+          }
       }
     }
   }
