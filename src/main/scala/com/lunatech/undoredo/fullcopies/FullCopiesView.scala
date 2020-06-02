@@ -1,4 +1,4 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.fullcopies
 
 import diode._
 import scalatags.JsDom.all._
@@ -6,7 +6,6 @@ import scalatags.JsDom.all._
 class FullCopiesView(wholeModel: ModelRO[FullCopies], dispatch: Dispatcher) {
   def render = {
     div(
-      h3("Full Copies"),
       p("Value = ", b(wholeModel().counter.value)),
       div(
         cls := "btn-group",

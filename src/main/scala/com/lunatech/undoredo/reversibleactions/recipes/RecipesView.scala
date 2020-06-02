@@ -1,4 +1,6 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.reversibleactions.recipes
+
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 import diode._
 import scalatags.JsDom.all._
@@ -11,31 +13,29 @@ import io.circe.parser._
 import io.circe.syntax._
 import io.circe.{ Decoder, Encoder }
 import scala.concurrent.ExecutionContext
-import scala.concurrent.ExecutionContext.Implicits.global
 
-class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
+class RecipesView(state: ModelRO[RootModel], dispatch: Dispatcher) {
 
   val couscous = Recipe("couscous", "Couscous", Seq("ig12", "ig22"), Seq("is12", "is22"))
   val cremeBrulee = Recipe("creme-brulee", "Creme Brulee", Seq("ig13", "ig23"), Seq("is13", "is23"))
 
   js.timers.setInterval(5000) {
-    Persistence.persist(recipes(), dispatch)
+    Client.persist(state().persistence, dispatch)
   }
 
   def render = {
     div(
-      h3("Cookbook"),
       div(
         cls := "btn-group",
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Undo)), "Undo"),
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Redo)), "Redo"),
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Reset)), "Reset")
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(UndoRedoHistoryActions.Undo)), "Undo"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(UndoRedoHistoryActions.Redo)), "Redo"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(Reset)), "Reset")
       ),
       p(),
       div(
         p("Recipes: "),
         ul(cls := "list-group",
-          recipes().recipes.toSeq.map { recipe => li(cls := "list-group-item",
+          state().recipes.toSeq.map { recipe => li(cls := "list-group-item",
             span(recipe.name),
             button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => dispatch(RecipeActions.Delete(recipe))), "Delete"),
           )}),
@@ -50,8 +50,8 @@ class RecipesView(recipes: ModelRO[Recipes], dispatch: Dispatcher) {
       p(),
       div(
         cls := "btn-group",
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => Persistence.fetchRecipes(dispatch)), "Fetch"),
-        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => Persistence.persist(recipes(), dispatch)), "Persist")
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => Client.fetchRecipes(dispatch)), "Fetch"),
+        button(`type` := "button", cls := "btn btn-outline-secondary", onclick := (() => Client.persist(state().persistence, dispatch)), "Persist")
       )
     )
   }

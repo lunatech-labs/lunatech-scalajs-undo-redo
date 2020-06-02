@@ -1,4 +1,4 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.example1
 
 import diode._
 import scalatags.JsDom.all._
@@ -6,7 +6,6 @@ import scalatags.JsDom.all._
 class ReversibleActionsView(partialModel: ModelRO[ReversibleActions], dispatch: Dispatcher) {
   def render = {
     div(
-      h3("Reversible Actions"),
       p("Value = ", b(partialModel().counter.value)),
       div(
         cls := "btn-group",

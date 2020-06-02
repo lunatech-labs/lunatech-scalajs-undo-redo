@@ -4,6 +4,11 @@ import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scalatags.JsDom.all._
 import org.scalajs.dom._
 
+import com.lunatech.undoredo.fullcopies._
+import com.lunatech.undoredo.example1._
+import com.lunatech.undoredo.reversibleactions._
+import com.lunatech.undoredo.reversibleactions.recipes._
+
 object SimpleApp {
 
   val fullCopiesView = new FullCopiesView(FullCopiesCircuit.zoom(identity), FullCopiesCircuit)
@@ -35,12 +40,13 @@ object SimpleApp {
       element.innerHTML = ""
       element.appendChild(div(cls := "container", recipesView.render).render)
     })
-    RecipesCircuit(RecipeActions.Reset)
+    RecipesCircuit(Reset)
+    RecipesCircuit.addProcessor(new RecipesPersistenceProcessor())
   }
 
   def main(args: Array[String]): Unit = {
-    //fullCopies()
-    //reversibleActions()
+    fullCopies()
+    reversibleActions()
     recipes()
   }
 }
