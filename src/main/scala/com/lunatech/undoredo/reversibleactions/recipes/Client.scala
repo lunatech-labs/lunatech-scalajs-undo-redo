@@ -1,4 +1,4 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.reversibleactions.recipes
 
 import diode._
 import org.scalajs.dom.ext.Ajax
@@ -7,7 +7,7 @@ import io.circe.syntax._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 
-object Persistence {
+object Client {
 
   val baseUrl = "http://localhost:5000"
 
@@ -24,8 +24,8 @@ object Persistence {
 
   }
 
-  def persist(recipes: Recipes, dispatch: Dispatcher): Unit = {
-    recipes.toAdd.map { recipe =>
+  def persist(persistence: Persistence, dispatch: Dispatcher): Unit = {
+    persistence.toAdd.map { recipe =>
       Ajax.post(
         url = s"$baseUrl/recipes",
         data = recipe.asJson.noSpaces,
@@ -33,18 +33,18 @@ object Persistence {
       ).onComplete {
         case Success(xhr) =>
           if (xhr.status == 200) {
-            dispatch(RecipeActions.AddedToPersistence(recipe))
+            dispatch(PersistenceActions.AddedToPersistence(recipe))
           }
         case Failure(t) => println("An error has occurred: " + t.getMessage)
       }
     }
-    recipes.toDelete.map { recipe =>
+    persistence.toDelete.map { recipe =>
       Ajax.delete(
         url = s"$baseUrl/recipes/${recipe.id}"
       ).onComplete {
         case Success(xhr) =>
           if (xhr.status == 200) {
-            dispatch(RecipeActions.DeletedFromPersistence(recipe))
+            dispatch(PersistenceActions.DeletedFromPersistence(recipe))
           }
         case Failure(t) => println("An error has occurred: " + t.getMessage)
       }

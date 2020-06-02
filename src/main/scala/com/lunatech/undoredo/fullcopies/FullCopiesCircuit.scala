@@ -1,4 +1,4 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.fullcopies
 
 import diode._
 import diode.ActionResult.ModelUpdate

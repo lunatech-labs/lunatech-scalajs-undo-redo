@@ -1,8 +1,10 @@
-package com.lunatech.undoredo
+package com.lunatech.undoredo.example1
 
 import diode._
 import diode.ActionResult.ModelUpdate
 import scala.math.{ max, min }
+
+case class Counter(value: Int)
 
 trait ReversibleAction extends Action {
   def update(model: ReversibleActions): ReversibleActions

@@ -1,0 +1,20 @@
+.collapsible {
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.active {
+  background-color: #f1f1f1;
+  margin-bottom: 0;
+}
+
+.content {
+  padding: 25px 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  margin-bottom: 25px;
+}
