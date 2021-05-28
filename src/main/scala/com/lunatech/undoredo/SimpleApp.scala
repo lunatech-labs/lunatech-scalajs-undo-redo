@@ -1,52 +1,28 @@
 package com.lunatech.undoredo
 
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
-import scalatags.JsDom.all._
+import scala.scalajs.js.annotation.JSExport
+import org.scalajs.dom
 import org.scalajs.dom._
+import japgolly.scalajs.react.vdom.html_<^._
 
-import com.lunatech.undoredo.fullcopies._
-import com.lunatech.undoredo.example1._
-import com.lunatech.undoredo.reversibleactions._
-import com.lunatech.undoredo.reversibleactions.recipes._
+import com.lunatech.undoredo.recipes.handlers.{ RecipesCircuit, RecipesPersistenceProcessor }
+import com.lunatech.undoredo.routes.AppRouter
+import com.lunatech.undoredo.fullcopies.handlers.FullCopiesCircuit
+import com.lunatech.undoredo.fullcopies.models.FullCopies
+import com.lunatech.undoredo.recipes.models.Reset
+import com.lunatech.undoredo.reversibleactions.handlers.ReversibleActionsCircuit
+import com.lunatech.undoredo.reversibleactions.models.ReversibleActions
 
 object SimpleApp {
 
-  val fullCopiesView = new FullCopiesView(FullCopiesCircuit.zoom(identity), FullCopiesCircuit)
-  val reversibleActionsView = new ReversibleActionsView(ReversibleActionsCircuit.zoom(identity), ReversibleActionsCircuit)
-  val recipesView = new RecipesView(RecipesCircuit.zoom(identity), RecipesCircuit)
-
-
-  def fullCopies(): Unit = {
-    FullCopiesCircuit.subscribe(FullCopiesCircuit.zoom(identity))(_ => {
-      val element = document.getElementById("fullCopies")
-      element.innerHTML = ""
-      element.appendChild(div(cls := "container", fullCopiesView.render).render)
-    })
+  @JSExport
+  def main(args: Array[String]): Unit = {
     FullCopiesCircuit(FullCopies.Reset)
-  }
-
-  def reversibleActions(): Unit = {
-    ReversibleActionsCircuit.subscribe(ReversibleActionsCircuit.zoom(identity))(_ => {
-      val element = document.getElementById("reversibleActions")
-      element.innerHTML = ""
-      element.appendChild(div(cls := "container", reversibleActionsView.render).render)
-    })
-    ReversibleActionsCircuit(ReversibleActions.Reset)
-  }
-
-  def recipes(): Unit = {
-    RecipesCircuit.subscribe(RecipesCircuit.zoom(identity))(_ => {
-      val element = document.getElementById("recipes")
-      element.innerHTML = ""
-      element.appendChild(div(cls := "container", recipesView.render).render)
-    })
     RecipesCircuit(Reset)
     RecipesCircuit.addProcessor(new RecipesPersistenceProcessor())
-  }
+    ReversibleActionsCircuit(ReversibleActions.Reset)
 
-  def main(args: Array[String]): Unit = {
-    fullCopies()
-    reversibleActions()
-    recipes()
+    val app = dom.document.getElementById("app")
+    AppRouter.router().renderIntoDOM(app)
   }
 }

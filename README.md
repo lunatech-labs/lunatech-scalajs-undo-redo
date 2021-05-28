@@ -29,3 +29,4 @@ Visit http://localhost:12345
 - [ ] Limit actions history to 5 items.
 - [ ] On the backend, merge the POST and DELETE endpoints.
 - [ ] Disable/enable undo redo buttons when the corresponding list is empty
+- [ ] Add akka-http server

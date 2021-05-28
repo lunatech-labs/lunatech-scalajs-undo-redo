@@ -1,4 +1,4 @@
-package com.lunatech.undoredo.reversibleactions.recipes
+package com.lunatech.undoredo.recipes.models
 
 import diode.Action
 
@@ -8,9 +8,9 @@ trait ReversibleRecipeAction extends Action {
 }
 
 object RecipeActions {
-  
+
   case class DirectUpdate(recipes: Set[Recipe]) extends Action
-  
+
   case class Add(recipe: Recipe) extends ReversibleRecipeAction {
 
     def update(recipes: Set[Recipe]): Set[Recipe] =
@@ -27,19 +27,5 @@ object RecipeActions {
     def undo(recipes: Set[Recipe]): Set[Recipe] =
       recipes + recipe
   }
-  
-}
-
-object UndoRedoHistoryActions {
-  case object Undo extends Action
-  case object Redo extends Action
-  
-  case class AddActionToPast(action: ReversibleRecipeAction) extends Action
-  
-}
-
-object PersistenceActions {
-  case class AddedToPersistence(recipe: Recipe) extends Action
-  case class DeletedFromPersistence(recipe: Recipe) extends Action
 
 }
