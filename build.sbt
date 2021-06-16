@@ -1,3 +1,5 @@
+import sbtcrossproject.CrossPlugin.autoImport.crossProject
+import sbtcrossproject.CrossType
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 // loads the server project at sbt startup
@@ -33,6 +35,7 @@ lazy val client = project
     Compile / fastOptJS / artifactPath := ((Compile / fastOptJS / crossTarget).value /
     ((fastOptJS / moduleName).value + "-opt.js"))
   )
+  .dependsOn(shared.js)
 
 val AkkaVersion = "2.6.15"
 
@@ -53,6 +56,19 @@ lazy val server = project
     Runtime / managedClasspath += (Assets / packageBin).value,
     Assets / pipelineStages := Seq(scalaJSPipeline),
     pipelineStages := Seq(digest)
+  )
+  .dependsOn(shared.jvm)
+
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("shared"))
+  .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "io.circe" %%% "circe-core"    % "0.13.0",
+      "io.circe" %%% "circe-generic" % "0.13.0",
+      "io.circe" %%% "circe-parser"  % "0.13.0"
+    )
   )
 
 lazy val root = (project in file("."))

@@ -8,14 +8,13 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{ Failure, Success }
 
 import com.lunatech.undoredo.recipes.models._
+import com.lunatech.undoredo.shared.model
 
 object Client {
 
-  val baseUrl = "http://localhost:5000"
-
-  def fetchRecipes(dispatch: Dispatcher): Unit = Ajax.get(s"$baseUrl/recipes").onComplete {
+  def fetchRecipes(dispatch: Dispatcher): Unit = Ajax.get("/recipes").onComplete {
     case Success(xhr) =>
-      decode[List[Recipe]](xhr.responseText).map { recipes =>
+      decode[List[model.Recipe]](xhr.responseText).map { recipes =>
         recipes.map { recipe =>
           dispatch(RecipeActions.Add(recipe))
         }
@@ -28,7 +27,7 @@ object Client {
     persistence.toAdd.map { recipe =>
       Ajax
         .post(
-          url     = s"$baseUrl/recipes",
+          url     = "/recipes",
           data    = recipe.asJson.noSpaces,
           headers = Map("Content-Type" -> "application/json")
         )
@@ -43,7 +42,7 @@ object Client {
     persistence.toDelete.map { recipe =>
       Ajax
         .delete(
-          url = s"$baseUrl/recipes/${recipe.id}"
+          url = s"/recipes/${recipe.id}"
         )
         .onComplete {
           case Success(xhr) =>

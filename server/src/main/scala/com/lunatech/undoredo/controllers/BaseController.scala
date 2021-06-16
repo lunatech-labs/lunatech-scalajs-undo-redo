@@ -4,6 +4,7 @@ import akka.http.scaladsl.server.Directives._
 import scala.concurrent.ExecutionContext
 import com.lunatech.undoredo.twirl.Implicits._
 import akka.http.scaladsl.server.PathMatcher
+import akka.http.scaladsl.server.Route
 
 class BaseController()(implicit val ec: ExecutionContext) {
   val home = path("") {
@@ -30,5 +31,5 @@ class BaseController()(implicit val ec: ExecutionContext) {
     }
   }
 
-  val routes = home ~ assets ~ favicon
+  val routes: Route = home ~ assets ~ favicon
 }

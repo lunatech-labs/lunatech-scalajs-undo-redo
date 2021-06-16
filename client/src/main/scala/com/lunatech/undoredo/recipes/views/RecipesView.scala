@@ -6,6 +6,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 import com.lunatech.undoredo.recipes.Client
 import com.lunatech.undoredo.recipes.models._
 import com.lunatech.undoredo.recipes.handlers.RecipesCircuit
+import com.lunatech.undoredo.shared.model.Recipe
 
 object RecipesView {
 
