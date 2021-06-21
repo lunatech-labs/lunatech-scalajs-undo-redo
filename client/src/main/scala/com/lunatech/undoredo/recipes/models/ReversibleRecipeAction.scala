@@ -2,6 +2,8 @@ package com.lunatech.undoredo.recipes.models
 
 import diode.Action
 
+import com.lunatech.undoredo.shared.model.Recipe
+
 trait ReversibleRecipeAction extends Action {
   def update(model: Set[Recipe]): Set[Recipe]
   def undo(model: Set[Recipe]): Set[Recipe]

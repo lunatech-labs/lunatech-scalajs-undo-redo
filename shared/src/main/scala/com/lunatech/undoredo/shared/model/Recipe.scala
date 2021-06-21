@@ -1,4 +1,4 @@
-package com.lunatech.undoredo.recipes.models
+package com.lunatech.undoredo.shared.model
 
 import io.circe._
 import io.circe.generic.semiauto._
@@ -6,5 +6,5 @@ import io.circe.generic.semiauto._
 case class Recipe(id: String, name: String, ingredients: Seq[String], instructions: Seq[String])
 
 object Recipe {
-  implicit val recipeCodec: Codec[Recipe] = deriveCodec[Recipe]
+  implicit val codec: Codec[Recipe] = deriveCodec[Recipe]
 }

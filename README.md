@@ -37,4 +37,6 @@ Visit http://localhost:8080
 - [ ] On the backend, merge the POST and DELETE endpoints.
 - [ ] Disable/enable undo redo buttons when the corresponding list is empty
 - [x] Add akka-http server
-- [ ] Move the python server to akka-http
+- [x] Move the python server to akka-http
+- [ ] Add logic in the backend
+- [ ] Add elasticsearch and elastic4s

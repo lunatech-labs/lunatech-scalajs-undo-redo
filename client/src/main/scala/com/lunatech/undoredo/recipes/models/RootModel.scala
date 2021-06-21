@@ -2,6 +2,8 @@ package com.lunatech.undoredo.recipes.models
 
 import diode.Action
 
+import com.lunatech.undoredo.shared.model.Recipe
+
 case class RootModel(
     recipes: Set[Recipe],
     undoRedoHistory: UndoRedoHistory,

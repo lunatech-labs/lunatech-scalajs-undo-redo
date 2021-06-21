@@ -6,6 +6,7 @@ import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
 
 import com.lunatech.undoredo.recipes.models.UndoRedoHistoryActions.AddActionToPast
 import com.lunatech.undoredo.recipes.models._
+import com.lunatech.undoredo.shared.model.Recipe
 
 class RecipesHandler(modelRW: ModelRW[RootModel, Set[Recipe]]) extends ActionHandler(modelRW) {
 
