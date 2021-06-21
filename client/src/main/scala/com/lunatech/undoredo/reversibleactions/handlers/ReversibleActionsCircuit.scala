@@ -3,6 +3,8 @@ package com.lunatech.undoredo.reversibleactions.handlers
 import diode._
 import diode.ActionResult.ModelUpdate
 import diode.react.{ ReactConnectProxy, ReactConnector }
+import japgolly.scalajs.react.Callback
+
 import com.lunatech.undoredo.reversibleactions.models._
 
 object ReversibleActionsCircuit extends Circuit[ReversibleActions] with ReactConnector[ReversibleActions] {
@@ -48,4 +50,5 @@ object ReversibleActionsCircuit extends Circuit[ReversibleActions] with ReactCon
     }
 
   val connectReversibleActions: ReactConnectProxy[ReversibleActions] = ReversibleActionsCircuit.connect(identity(_))
+  def dispatchCB[A: ActionType](action: => A): Callback              = Callback(dispatch(action))
 }

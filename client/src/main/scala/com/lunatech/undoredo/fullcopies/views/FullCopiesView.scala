@@ -22,25 +22,25 @@ object FullCopiesView {
         <.button(
           ^.`type` := "button",
           ^.cls := "btn btn-outline-secondary",
-          ^.onClick --> Callback(FullCopiesCircuit.dispatch(FullCopies.Increase(2))),
+          ^.onClick --> FullCopiesCircuit.dispatchCB(FullCopies.Increase(2)),
           "Increase"
         ),
         <.button(
           ^.`type` := "button",
           ^.cls := "btn btn-outline-secondary",
-          ^.onClick --> Callback(FullCopiesCircuit.dispatch(FullCopies.Reset)),
+          ^.onClick --> FullCopiesCircuit.dispatchCB(FullCopies.Reset),
           "Reset"
         ),
         <.button(
           ^.`type` := "button",
           ^.cls := "btn btn-outline-secondary",
-          ^.onClick --> Callback(FullCopiesCircuit.dispatch(FullCopies.Undo)),
+          ^.onClick --> FullCopiesCircuit.dispatchCB(FullCopies.Undo),
           "Undo"
         ),
         <.button(
           ^.`type` := "button",
           ^.cls := "btn btn-outline-secondary",
-          ^.onClick --> Callback(FullCopiesCircuit.dispatch(FullCopies.Redo)),
+          ^.onClick --> FullCopiesCircuit.dispatchCB(FullCopies.Redo),
           "Redo"
         )
       )

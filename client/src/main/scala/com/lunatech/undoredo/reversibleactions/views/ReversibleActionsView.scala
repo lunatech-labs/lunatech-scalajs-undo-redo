@@ -25,25 +25,25 @@ object ReversibleActionsView {
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(ReversibleActionsCircuit.dispatch(ReversibleActions.Increase(3))),
+            ^.onClick --> ReversibleActionsCircuit.dispatchCB(ReversibleActions.Increase(3)),
             "Increase"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(ReversibleActionsCircuit.dispatch(ReversibleActions.Reset)),
+            ^.onClick --> ReversibleActionsCircuit.dispatchCB(ReversibleActions.Reset),
             "Reset"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(ReversibleActionsCircuit.dispatch(ReversibleActions.Undo)),
+            ^.onClick --> ReversibleActionsCircuit.dispatchCB(ReversibleActions.Undo),
             "Undo"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(ReversibleActionsCircuit.dispatch(ReversibleActions.Redo)),
+            ^.onClick --> ReversibleActionsCircuit.dispatchCB(ReversibleActions.Redo),
             "Redo"
           )
         )

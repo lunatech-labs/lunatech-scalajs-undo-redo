@@ -17,6 +17,7 @@ object SimpleApp {
 
   @JSExport
   def main(args: Array[String]): Unit = {
+    // All 3 diode circuits are initialized here
     FullCopiesCircuit(FullCopies.Reset)
     RecipesCircuit(Reset)
     RecipesCircuit.addProcessor(new RecipesPersistenceProcessor())

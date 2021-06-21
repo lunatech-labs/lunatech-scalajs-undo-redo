@@ -34,19 +34,19 @@ object RecipesView {
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(RecipesCircuit.dispatch(UndoRedoHistoryActions.Undo)),
+            ^.onClick --> RecipesCircuit.dispatchCB(UndoRedoHistoryActions.Undo),
             "Undo"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(RecipesCircuit.dispatch(UndoRedoHistoryActions.Redo)),
+            ^.onClick --> RecipesCircuit.dispatchCB(UndoRedoHistoryActions.Redo),
             "Redo"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(RecipesCircuit.dispatch(Reset)),
+            ^.onClick --> RecipesCircuit.dispatchCB(Reset),
             "Reset"
           )
         ),
@@ -63,7 +63,7 @@ object RecipesView {
                 <.button(
                   ^.`type` := "button",
                   ^.cls := "btn btn-outline-secondary",
-                  ^.onClick --> Callback(RecipesCircuit.dispatch(RecipeActions.Delete(recipe))),
+                  ^.onClick --> RecipesCircuit.dispatchCB(RecipeActions.Delete(recipe)),
                   "Delete"
                 )
               )
@@ -77,13 +77,13 @@ object RecipesView {
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(RecipesCircuit.dispatch(RecipeActions.Add(couscous))),
+            ^.onClick --> RecipesCircuit.dispatchCB(RecipeActions.Add(couscous)),
             "Add Couscous"
           ),
           <.button(
             ^.`type` := "button",
             ^.cls := "btn btn-outline-secondary",
-            ^.onClick --> Callback(RecipesCircuit.dispatch(RecipeActions.Add(cremeBrulee))),
+            ^.onClick --> RecipesCircuit.dispatchCB(RecipeActions.Add(cremeBrulee)),
             "Add Creme Brulee"
           )
         ),

@@ -32,6 +32,6 @@ object AppRouter {
   }
 
   def router: Router[AppPage] =
-    Router(BaseUrl.until_#, config.logToConsole)
+    Router(BaseUrl.until_#, config)
 
 }

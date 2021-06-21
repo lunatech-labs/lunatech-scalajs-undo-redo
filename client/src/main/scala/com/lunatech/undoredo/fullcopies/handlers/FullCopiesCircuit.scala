@@ -4,6 +4,7 @@ import diode._
 import diode.ActionResult.ModelUpdate
 import scala.math.{ max, min }
 import diode.react.{ ReactConnectProxy, ReactConnector }
+import japgolly.scalajs.react.Callback
 
 import com.lunatech.undoredo.fullcopies.models._
 
@@ -42,5 +43,6 @@ object FullCopiesCircuit extends Circuit[FullCopies] with ReactConnector[FullCop
 
         case _ => None
       }
-  val connectFullCopies: ReactConnectProxy[FullCopies] = FullCopiesCircuit.connect(identity(_))
+  val connectFullCopies: ReactConnectProxy[FullCopies]  = FullCopiesCircuit.connect(identity(_))
+  def dispatchCB[A: ActionType](action: => A): Callback = Callback(dispatch(action))
 }
