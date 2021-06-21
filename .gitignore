@@ -5,3 +5,5 @@ venv
 
 project
 target
+
+.DS_STORE
